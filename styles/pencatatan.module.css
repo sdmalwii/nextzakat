@@ -1,0 +1,407 @@
+/* --- CONTAINER UTAMA --- */
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #e4f1fc;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 17.5rem;
+  background-color: #1E3A5F;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+}
+
+
+/* Di file pencatatan.module.css */
+.sidebarClosed {
+  width: 4rem; /* Sesuaikan dengan lebar yang sama seperti di dashboard */
+  overflow: hidden;
+}
+
+/* Saat sidebar ditutup, geser main content ke kiri */
+.sidebarClosed + .mainContent {
+  margin-left: 4rem; /* Sesuaikan dengan lebar sidebar saat ditutup */
+}
+
+/* Logo di Sidebar */
+.logo {
+  padding: 1rem;
+  background-color: #002b3a;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoIcon {
+  font-size: 1.6rem;
+}
+
+.logoText {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Menu Navigasi di Sidebar */
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.menuItem:hover {
+  background-color: rgba(28, 86, 234, 0.313);
+  color: #ffffff;
+}
+
+.menuIcon {
+  margin-right: 0.75rem;
+  font-size: 1.5rem; 
+}
+
+/* --- KONTEN UTAMA --- */
+.mainContent {
+  flex: 1;
+  padding: 1rem;
+  margin-left: 17.5rem; /* Sesuaikan dengan lebar sidebar saat terbuka */
+  transition: margin-left 0.3s ease;
+}
+
+/* --- BARIS AKSI (IKON MENU, SEARCH, DAN TAMBAH DATA) --- */
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  margin-top: -0.5rem; /* Geser action bar ke atas */
+  margin-left:-1rem ;
+}
+
+
+/* Ikon Menu untuk Buka/Tutup Sidebar */
+/* Sesuaikan posisi ikon menu */
+.menuButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #1E3A5F;
+  position: absolute; /* Tambahkan posisi absolute */
+  top: 1rem; /* Atur jarak dari atas */
+  left: 1rem; /* Atur jarak dari kiri */
+  z-index: 1000; /* Pastikan di atas elemen lain */
+}
+
+
+/* Container untuk Fitur Pencarian & Tambah Data di kanan */
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto; /* Dorong ke kanan */
+}
+
+/* Container untuk Fitur Pencarian */
+.searchContainer {
+  position: relative;
+}
+
+/* Ikon Search */
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-family: "poppins"; 
+}
+
+/* Input Pencarian */
+.searchInput {
+  padding: 0.5rem;
+  padding-left: 2.5rem;
+  border: 1.5px solid black;
+  border-radius: 4px;
+  width: 200px;
+  font-family: "poppins";
+  text-align: justify;
+  margin-top: 5px;
+}
+
+/* Tombol Tambah Data */
+.addButton {
+  padding: 0.5rem 1.2rem;
+  background-color: #3d8ce6;
+  color: white;
+  border: 1.5px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "poppins";
+  margin-top: 5px;
+}
+
+.addButtonlaporan {
+  padding: 0.5rem 1rem;
+  background-color: #16d55c;
+  color: white;
+  border: 1.5px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "poppins";
+  margin-top: 5px;
+}
+
+/* --- TABEL DATA --- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  font-family: "poppins";
+}
+
+  .table th:nth-child(1), 
+  .table td:nth-child(1) {
+  width: 3.5%; /* Nomor */
+  }
+
+  .table th:nth-child(2), 
+  .table td:nth-child(2) {
+  width: 6%; /* id muzaki */
+  }
+
+  .table th:nth-child(3), 
+  .table td:nth-child(3) {
+  width: 11%; /* Nama */
+  }
+
+  /* Perbesar sedikit kolom Alamat */
+  .table th:nth-child(4), 
+  .table td:nth-child(4) {
+   width: 8%; /* Bisa disesuaikan */
+  }
+
+  .table th:nth-child(5), 
+  .table td:nth-child(5) {
+  width: 14%; /* Nama ayah */
+  }
+
+  .table th:nth-child(6), 
+  .table td:nth-child(6) {
+   width: 9%; /* Beras */
+  }
+
+  .table th:nth-child(7), 
+  .table td:nth-child(7) {
+   width: 7%; /* tanggal catat */
+  }
+
+  .table th:nth-child(8), 
+  .table td:nth-child(8) {
+   width: 10%; /* action */
+  }
+
+/* Header Tabel */
+.table th,
+.table td {
+  padding: 0.50rem;
+  border: 3px solid #002b3a;
+  text-align: center;
+}
+
+.table th {
+  background-color: #1E3A5F;
+  color: white;
+  text-align: center;
+}
+
+/* Efek hover pada baris tabel */
+.table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* --- TOMBOL AKSI (EDIT DAN DELETE) --- */
+.editButton {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton {
+  background-color: #F44336;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/* --- PROFIL DAN DROPDOWN --- */
+.profileContainer {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.profileButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #1E3A5F;
+  display: flex;
+  align-items: center;
+}
+
+.profileIcon {
+  font-size: 2rem;
+  color: #1E3A5F;
+}
+
+.profileDropdown {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdownItem {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1E3A5F;
+  font-family: "poppins";
+}
+
+.dropdownItem:hover {
+  background-color: #f5f5f5;
+}
+
+/* --- BARIS AKSI (IKON MENU, SEARCH, DAN TAMBAH DATA) --- */
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  position: relative; /* Tambahkan ini untuk memastikan posisi relatif */
+}
+
+/* Geser fitur pencarian dan tombol tambah data ke bawah */
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+  margin-top: 4rem; /* Sesuaikan margin-top untuk menggeser ke bawah */
+}
+
+/* --- MODAL STYLES --- */
+.modalOverlay {
+  position: fixed;
+  width: 110%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  font-family: "poppins";
+}
+
+.modal {
+  background-color: white;
+  padding: 1.7rem;
+ border-radius: 10px;
+  width: 420px;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.modal h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #1E3A5F;
+  text-align: center;
+  font-family: "poppins";
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #1E3A5F;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancelButton {
+  padding: 0.5rem 1rem;
+  background-color: #ccc;
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.5);  
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "poppins";
+}
+
+.submitButton {
+  padding: 0.5rem 1rem;
+  background-color: #3d8ce6;
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.5);  
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "poppins";
+}
+
+.cancelButton:hover,
+.submitButton:hover {
+  opacity: 0.9;
+}
+
+.selectDropdown {
+  max-height: 100px; /* Lebih pendek dari sebelumnya */
+  overflow-y: auto;  /* Tetap bisa di-scroll */
+  width: 120px;      /* Lebar tetap sama */
+  font-size: 13px;   /* Ukuran teks tetap kecil */
+  padding: 5px;      /* Padding tetap */
+}
+

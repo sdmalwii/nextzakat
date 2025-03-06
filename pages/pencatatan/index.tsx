@@ -1,0 +1,213 @@
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { FaMosque, FaSearch, FaUserCircle } from 'react-icons/fa';
+import { AiOutlineHome, AiOutlineForm, AiOutlineGift } from 'react-icons/ai';
+import { CiMenuBurger } from 'react-icons/ci';
+import styles from '../../styles/pencatatan.module.css';
+
+const PencatatanZakat = () => {
+  const [search, setSearch] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [idMuzaki, setIdMuzaki] = useState('MZ-MAH-001');
+
+  // Daftar ID yang bisa dipilih
+  const idOptions = Array.from({ length: 100 }, (_, i) => `MZ-MAH-${(i + 1).toString().padStart(3, '0')}`);
+
+  // Fungsi untuk mengubah ID Muzaki 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ''); // Hanya angka yang boleh masuk
+    setIdMuzaki(`MZ-MAH-${value}`);
+  };
+
+  // Fungsi untuk memilih ID dari dropdown
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIdMuzaki(e.target.value);
+  };
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleProfileDropdown = () => setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  const handleLogout = () => console.log('Logout berhasil');
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Data berhasil disimpan');
+    closeModal();
+  };
+
+  return (
+    <div className={styles.container}>
+    {/* SIDEBAR */}
+    <div className={`${styles.sidebar} ${isSidebarOpen ? '' : styles.sidebarClosed}`}>
+      <div className={styles.logo}>
+        <FaMosque className={styles.logoIcon} />
+        {isSidebarOpen && <span className={styles.logoText}>Musholla Al-Hidayah</span>}
+      </div>
+      {/* Menu Navigasi */}
+      <nav>
+        <Link href="/dashboard" className={styles.menuItem} style={{ textDecoration: 'none' }}>
+          <AiOutlineHome className={styles.menuIcon} />
+          {isSidebarOpen && <span>Dashboard</span>}
+        </Link>
+        <Link href="/pencatatan" className={styles.menuItem} style={{ textDecoration: 'none' }}>
+          <AiOutlineForm className={styles.menuIcon} />
+          {isSidebarOpen && <span>Pencatatan Zakat</span>}
+        </Link>
+        <Link href="/penerimaan" className={styles.menuItem} style={{ textDecoration: 'none' }}>
+          <AiOutlineGift className={styles.menuIcon} />
+          {isSidebarOpen && <span>Penerimaan Zakat</span>}
+        </Link>
+      </nav>
+    </div>
+
+      {/* KONTEN UTAMA */}
+      <div className={styles.mainContent}>
+        <div className={styles.actionBar}>
+          <button onClick={toggleSidebar} className={styles.menuButton}>
+            <CiMenuBurger className={styles.menuIcon} />
+          </button>
+          <div className={styles.profileContainer}>
+            <button onClick={toggleProfileDropdown} className={styles.profileButton}>
+              <FaUserCircle className={styles.profileIcon} />
+            </button>
+            {isProfileDropdownOpen && (
+              <div className={styles.profileDropdown}>
+                <button onClick={handleLogout} className={styles.dropdownItem}>
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+          
+          <div className={styles.rightActions}>
+            <div className={styles.searchContainer}>
+              <FaSearch className={styles.searchIcon} />
+              <input
+                type="text"
+                placeholder="Cari Id Muzaki..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className={styles.searchInput}
+              />
+            </div>
+            <button onClick={openModal} className={styles.addButton}>
+              Tambah Data
+            </button>
+            
+            <button className={styles.addButtonlaporan}>
+              Buat Laporan
+            </button>
+
+          </div>
+        </div>
+
+        {/* TABEL DATA */}
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Id Muzaki</th>
+              <th>Nama</th>
+              <th>Jenis Kelamin</th>
+              <th>Nama Ayah</th>
+              <th>Jumlah Beras</th>
+              <th>Tanggal Catat</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>{/* Data akan ditampilkan di sini */}</tbody>
+        </table>
+      </div>
+
+      {/* MODAL FORM TAMBAH DATA */}
+      {isModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h2>Tambah Data Pencatatan Zakat</h2>
+            <form onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
+                <label>Nomor</label>
+                <input type="number" required />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Id Muzaki</label>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <input
+                    type="text"
+                    value={idMuzaki}
+                    onChange={handleChange}
+                    required
+                    style={{ padding: '8px', fontSize: '16px' }}
+                  />
+                 <select 
+                    onChange={handleSelect} 
+                    value={idMuzaki} 
+                    className={styles.selectDropdown}
+                  >
+                    {idOptions.map((id) => (
+                      <option key={id} value={id}>
+                        {id}
+                      </option>
+                    ))}
+                  </select>
+
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Nama</label>
+                <input type="text" required />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Jenis Kelamin</label>
+                <select required>
+                  <option value="">Pilih</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Nama Ayah</label>
+                <input type="text" required />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Jumlah Beras</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input 
+                    type="number" 
+                    min="0" 
+                    step="0.5" 
+                    required 
+                  />
+                  <span>Liter</span>
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Tanggal Catat</label>
+                <input type="date" required />
+              </div>
+
+              <div className={styles.formActions}>
+                <button type="button" onClick={closeModal} className={styles.cancelButton}>
+                  Batal
+                </button>
+                <button type="submit" className={styles.submitButton}>
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default PencatatanZakat;
