@@ -224,7 +224,7 @@ import styles from '../../styles/penerimaan.module.css';
               </div>
 
               <div className={styles.formGroup}>
-                <label>Tanggal Catat</label>
+                <label>Tanggal Terima</label>
                 <input type="date" required />
               </div>
 
