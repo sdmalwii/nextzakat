@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import React, { useState } from "react";                                  //Untuk membuat variabel di React.
 import styles from "../../styles/login.module.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router";                                  //Untuk redirect (pindah halaman) setelah login sukses.
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");                                 //Menyimpan pesan error kalau login gagal.
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();                                                   //e.preventDefault(): Supaya form tidak reload browser saat diklik Submit.
     setError(""); // reset error sebelum submit
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch("http://localhost:5000/api/login", {        //fetch: mengirim data email dan password ke backend kamu (localhost:5000/api/login).
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }),                        //Kirim dalam format JSON { email, password }.
+
       });
 
-      const data = await res.json();
+      const data = await res.json();                                      //Baca jawaban server (yang tadi bisa "Login berhasil" atau error lain).
 
       if (res.ok) {
         // bisa simpan user info ke localStorage / cookie kalau perlu
-        router.push("/dashboard"); // redirect ke dashboard
+        router.push("/dashboard"); // ngarahin ke dashboard
       } else {
         setError(data.message || "Login gagal. Periksa kembali data.");
       }
-    } catch (err) {
-      setError("Gagal terhubung ke server. Silakan coba beberapa saat lagi.");
+    } catch (err) {                                                         //Misal server mati atau error koneksi, tampilkan pesan umum.
+      setError("Gagal terhubung ke server. Silakan coba beberapa saat lagi."); 
     }
   };
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginBox}>
-        <div className={styles.loginBoxHeader}>Welcome Back!</div>
+        <div className={styles.loginBoxHeader}>Zakat Mushola Al-Hidayah</div>
         <form className={styles.loginForm} onSubmit={handleSubmit}>
           <label htmlFor="email">Your Email</label>
           <input
@@ -53,7 +54,7 @@ export default function Login() {
           <input
             type="password"
             id="password"
-            placeholder="Masukan Password kamu"
+            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
