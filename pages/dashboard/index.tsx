@@ -4,6 +4,8 @@ import { FaMosque, FaUserCircle } from 'react-icons/fa';
 import { AiOutlineHome, AiOutlineForm, AiOutlineGift } from 'react-icons/ai';
 import { CiMenuBurger } from 'react-icons/ci';
 import styles from '../../styles/dashboard.module.css';
+import withAuth from "../../utils/Auth";
+import { useRouter } from 'next/router';
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -11,6 +13,7 @@ const Dashboard = () => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleProfileDropdown = () => setIsProfileDropdownOpen(!isProfileDropdownOpen);
   const handleLogout = () => console.log('Logout berhasil');
+  const router = useRouter();
 
   return (
     <div className={styles.container}>
@@ -51,7 +54,12 @@ const Dashboard = () => {
             
             {isProfileDropdownOpen && (
               <div className={styles.profileDropdown}>
-                <button onClick={handleLogout} className={styles.dropdownItem}>
+                <button className={styles.dropdownItem}
+                  onClick={() => {
+                    localStorage.removeItem("isLoggedIn");
+                    router.push("/login");
+                  }}
+                >
                   Logout
                 </button>
               </div>
@@ -64,4 +72,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

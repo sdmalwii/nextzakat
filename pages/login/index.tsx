@@ -1,37 +1,45 @@
-import React, { useState } from "react";                                  //Untuk membuat variabel di React.
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "../../styles/login.module.css";
-import { useRouter } from "next/router";                                  //Untuk redirect (pindah halaman) setelah login sukses.
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");                                 //Menyimpan pesan error kalau login gagal.
+  const [error, setError] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    // Cek kalau sudah login, langsung redirect
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      router.back(); // balik ke halaman sebelumnya
+      // router.push("/dashboard"); // alternatif: langsung ke dashboard
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();                                                   //e.preventDefault(): Supaya form tidak reload browser saat diklik Submit.
-    setError(""); // reset error sebelum submit
+    e.preventDefault();
+    setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {        //fetch: mengirim data email dan password ke backend kamu (localhost:5000/api/login).
+      const res = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),                        //Kirim dalam format JSON { email, password }.
-
+        body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();                                      //Baca jawaban server (yang tadi bisa "Login berhasil" atau error lain).
+      const data = await res.json();
 
       if (res.ok) {
-        // bisa simpan user info ke localStorage / cookie kalau perlu
-        router.push("/dashboard"); // ngarahin ke dashboard
+        localStorage.setItem("isLoggedIn", "true");
+        router.push("/dashboard");
       } else {
         setError(data.message || "Login gagal. Periksa kembali data.");
       }
-    } catch (err) {                                                         //Misal server mati atau error koneksi, tampilkan pesan umum.
-      setError("Gagal terhubung ke server. Silakan coba beberapa saat lagi."); 
+    } catch (err) {
+      setError("Gagal terhubung ke server. Silakan coba beberapa saat lagi.");
     }
   };
 

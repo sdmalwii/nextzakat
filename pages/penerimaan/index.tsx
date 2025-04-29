@@ -4,6 +4,7 @@ import { FaMosque, FaSearch, FaUserCircle } from 'react-icons/fa';
 import { AiOutlineHome, AiOutlineForm, AiOutlineGift } from 'react-icons/ai';
 import { CiMenuBurger } from 'react-icons/ci';
 import styles from '../../styles/penerimaan.module.css';
+import withAuth from "../../utils/Auth";
 
   const PenerimaanZakat = () => {
   const [search, setSearch] = useState('');
@@ -244,4 +245,4 @@ import styles from '../../styles/penerimaan.module.css';
   );
 };
 
-export default PenerimaanZakat;
+export default withAuth(PenerimaanZakat);
