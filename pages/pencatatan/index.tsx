@@ -6,6 +6,7 @@ import { AiOutlineHome, AiOutlineForm, AiOutlineGift } from 'react-icons/ai';
 import { CiMenuBurger } from 'react-icons/ci';
 import styles from '../../styles/pencatatan.module.css';
 import withAuth from '../../utils/Auth';
+import * as XLSX from 'xlsx';
 
 interface PencatatanData {
   Id_Pencatatan: string;
@@ -132,6 +133,30 @@ const PencatatanZakat: React.FC = () => {
     d.Nama.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Tambahkan fungsi ini di dalam komponen PencatatanZakat (sebelum return)
+  const exportToExcel = () => {
+    // Format data untuk Excel
+    const excelData = filtered.map((item, index) => ({
+      No: index + 1,
+      'ID Muzaki': item.Id_Muzaki,
+      Nama: item.Nama,
+      'Jenis Kelamin': item.Jenis_Kelamin,
+      Nama_Ayah: item.Nama_Ayah,
+      'Jumlah Beras (Liter)': item.Jumlah_Beras,
+      'Tanggal Catat': new Date(item.Tanggal_Catat).toLocaleDateString('id-ID')
+    }));
+
+    // Buat worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    
+    // Buat workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Pencatatan Zakat");
+    
+    // Export ke file Excel
+    XLSX.writeFile(wb, `Laporan_Pencatatan_Zakat_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
   return (
     <div className={styles.container}>
       <div className={`${styles.sidebar} ${isSidebarOpen ? '' : styles.sidebarClosed}`}>
@@ -163,7 +188,7 @@ const PencatatanZakat: React.FC = () => {
               <input type="text" placeholder="Cari Id Muzaki..." value={search} onChange={e => setSearch(e.target.value)} className={styles.searchInput} />
             </div>
             <button onClick={openCreate} className={styles.addButton}>Tambah Data</button>
-            <button className={styles.addButtonlaporan}>Buat Laporan</button>
+            <button onClick={exportToExcel} className={styles.addButtonlaporan}>Buat Laporan</button>
           </div>
         </div>
 
@@ -188,7 +213,7 @@ const PencatatanZakat: React.FC = () => {
                   <td>{d.Id_Muzaki}</td>
                   <td>{d.Nama}</td>
                   <td>{d.Jenis_Kelamin}</td>
-                  <td>{d.Nama_Ayah || '-'}</td>
+                  <td>{d.Nama_Ayah}</td>
                   <td>{d.Jumlah_Beras} Liter</td>
                   <td>{new Date(d.Tanggal_Catat).toLocaleDateString('id-ID')}</td>
                   <td className={styles.actionCell}>

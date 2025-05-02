@@ -208,7 +208,7 @@
 
   .table th:nth-child(8), 
   .table td:nth-child(8) {
-   width: 10%; /* action */
+   width: 5%; /* action */
   }
 
 /* Header Tabel */

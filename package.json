@@ -16,7 +16,8 @@
     "popper.js": "^1.16.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.4.0"
+    "react-icons": "^5.4.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^20",
