@@ -292,13 +292,13 @@ const exportToExcel = () => {
                 <select name="Golongan" value={form.Golongan} onChange={handleChange} required>
                   <option value="">Pilih</option>
                   <option value="">Pilih</option>
-                  <option value="Fakir">Warga Kurang Mampu</option>
-                  <option value="Miskin">Anak Yatim / Piatu</option>
-                  <option value="Hamba sahaya">Lansia / Janda / Dhuafa</option>
-                  <option value="Fii Sabilillah">Warga Sakit / Tidak Bisa Bekerja</option>
-                  <option value="Musafir">Pendatang / Musafir</option>
-                  <option value="Mualaf">Guru / Pengajar Tetap Musholla</option>                
-                  <option value="Gharim">Amil</option>
+                  <option value="Warga Kurang Mampu">Warga Kurang Mampu</option>
+                  <option value="Anak Yatim / Piatu">Anak Yatim / Piatu</option>
+                  <option value="Lansia / Janda / Dhuafa">Lansia / Janda / Dhuafa</option>
+                  <option value="Warga Sakit / Tidak Bisa Bekerja">Warga Sakit / Tidak Bisa Bekerja</option>
+                  <option value="Pendatang / Musafir">Pendatang / Musafir</option>
+                  <option value="Guru / Pengajar Tetap Musholla">Guru / Pengajar Tetap Musholla</option>                
+                  <option value=">Amil">Amil</option>
                   </select>
               </div>
 
@@ -325,7 +325,7 @@ const exportToExcel = () => {
                       "Lansia"
                     }
                   </small>
-                )}
+                )}N
               </div>
 
               </div>
