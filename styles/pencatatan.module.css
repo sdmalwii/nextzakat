@@ -172,7 +172,7 @@
 
   .table th:nth-child(1), 
   .table td:nth-child(1) {
-  width: 3.5%; /* Nomor */
+  width: 1.5%; /* Nomor */
   }
 
   .table th:nth-child(2), 
@@ -182,32 +182,37 @@
 
   .table th:nth-child(3), 
   .table td:nth-child(3) {
-  width: 11%; /* Nama */
+  width: 9%; /* Nama */
   }
 
   /* Perbesar sedikit kolom Alamat */
   .table th:nth-child(4), 
   .table td:nth-child(4) {
-   width: 8%; /* Bisa disesuaikan */
+   width: 5%; /* Bisa disesuaikan */
   }
 
   .table th:nth-child(5), 
   .table td:nth-child(5) {
-  width: 14%; /* Nama ayah */
+  width: 3.5%; /* Nama ayah */
   }
 
   .table th:nth-child(6), 
   .table td:nth-child(6) {
-   width: 9%; /* Beras */
+   width: 6%; /* Beras */
   }
 
   .table th:nth-child(7), 
   .table td:nth-child(7) {
-   width: 7%; /* tanggal catat */
+   width: 9%; /* tanggal catat */
   }
 
   .table th:nth-child(8), 
   .table td:nth-child(8) {
+   width: 5%; /* action */
+  }
+
+  .table th:nth-child(9), 
+  .table td:nth-child(9) {
    width: 5%; /* action */
   }
 
@@ -405,3 +410,27 @@
   padding: 5px;      /* Padding tetap */
 }
 
+/* --- FORM GROUP ROW (UNTUK INPUT SEJAJAR) --- */
+.formGroupRow {
+  display: flex;
+  gap: 1rem; /* Jarak antara Jumlah Jiwa dan Jumlah Beras */
+  justify-content: space-between;
+}
+
+.formGroupRow .formGroup {
+  flex: 1; /* Membagi lebar sama rata */
+}
+
+/* Input Jumlah Jiwa & Beras */
+.formGroupRow input {
+  width: 100% !important; /* Penuh di container-nya */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Input Beras (readonly) */
+.readOnlyInput {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}

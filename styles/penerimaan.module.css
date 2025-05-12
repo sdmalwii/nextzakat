@@ -345,6 +345,8 @@
 
 .formGroup {
   margin-bottom: 1rem;
+  flex: 1; /* Membuat form group fleksibel */
+  min-width: 120px; /* Lebar minimum untuk mencegah terlalu kecil */
 }
 
 .formGroup label {
@@ -370,8 +372,23 @@
 
 .formRowFlex {
   display: flex;
-  gap: 2.5rem; /* Jarak antara elemen */
-  align-items: flex-end; /* Agar elemen sejajar di bagian bawah */
+  gap: 1rem; /* Jarak antara elemen */
+  align-items: flex-start; /* Agar elemen sejajar di bagian bawah */
+}
+
+/* Pastikan semua formGroup dalam satu baris memiliki tinggi yang sama */
+.formRowFlex .formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 1px;
+}
+
+/* Khusus untuk input Usia */
+.formRowFlex .formGroup input[type="number"] {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .cancelButton {
@@ -399,10 +416,10 @@
   opacity: 0.9;
 }
 
-.selectDropdown {
-  max-height: 100px; /* Lebih pendek dari sebelumnya */
-  overflow-y: auto;  /* Tetap bisa di-scroll */
-  width: 120px;      /* Lebar tetap sama */
-  font-size: 13px;   /* Ukuran teks tetap kecil */
-  padding: 5px;      /* Padding tetap */
+/* Untuk select Golongan khusus */
+.modal select[name="Golongan"] {
+  max-width: 110px; /* Sesuaikan dengan kebutuhan */
 }
+
+
+

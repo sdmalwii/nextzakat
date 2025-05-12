@@ -13,8 +13,9 @@ interface PencatatanData {
   Id_Muzaki: string;
   Nama: string;
   Jenis_Kelamin: string;
-  Nama_Ayah: string;
+  Jumlah_Jiwa: number;
   Jumlah_Beras: number;
+  Nama_Anggota_Jiwa: string;
   Tanggal_Catat: string;
 }
 
@@ -27,8 +28,9 @@ const PencatatanZakat: React.FC = () => {
     Id_Muzaki: 'MZ-MAH-001',
     Nama: '',
     Jenis_Kelamin: '',
-    Nama_Ayah: '',
+    Jumlah_Jiwa: 0,
     Jumlah_Beras: 0,
+    Nama_Anggota_Jiwa: '',
     Tanggal_Catat: new Date().toISOString().split('T')[0],
   });
   const [isEdit, setIsEdit] = useState(false);
@@ -51,12 +53,25 @@ const PencatatanZakat: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: name === 'Jumlah_Beras' ? parseFloat(value) : value,
-    }));
+    
+    setForm(prev => {
+      // Jika yang diubah adalah Id_pencatatan, update juga Id_Muzaki
+      if (name === "Id_Pencatatan") {
+        return {
+          ...prev,
+          Id_Pencatatan: value,
+          Id_Muzaki: `MZ-MAH-${value}`, // Format otomatis
+        };
+      }
+      
+      // Untuk field lainnya, tetap seperti biasa
+      return {
+        ...prev,
+        [name]: name === 'Jumlah_Beras' ? parseFloat(value) : value,
+      };
+    });
   };
 
   const openCreate = () => {
@@ -65,8 +80,9 @@ const PencatatanZakat: React.FC = () => {
       Id_Muzaki: 'MZ-MAH-001',
       Nama: '',
       Jenis_Kelamin: '',
-      Nama_Ayah: '',
+      Jumlah_Jiwa: 0,
       Jumlah_Beras: 0,
+      Nama_Anggota_Jiwa: '',
       Tanggal_Catat: new Date().toISOString().split('T')[0],
     });
     setIsEdit(false);
@@ -83,6 +99,18 @@ const PencatatanZakat: React.FC = () => {
     setIsEdit(true);
     setShowModal(true);
   };
+
+  const handleJiwaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const jiwa = parseInt(e.target.value) || 0;
+    const beras = jiwa * 3.5; // 3.5 liter per jiwa
+    
+    setForm(prev => ({
+      ...prev,
+      Jumlah_Jiwa: jiwa,
+      Jumlah_Beras: beras
+    }));
+  };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,8 +169,9 @@ const PencatatanZakat: React.FC = () => {
       'ID Muzaki': item.Id_Muzaki,
       Nama: item.Nama,
       'Jenis Kelamin': item.Jenis_Kelamin,
-      Nama_Ayah: item.Nama_Ayah,
+      'Jumlah Jiwa (Jiwa)': item.Jumlah_Jiwa,
       'Jumlah Beras (Liter)': item.Jumlah_Beras,
+      'Nama Anggota Jiwa': item.Nama_Anggota_Jiwa,
       'Tanggal Catat': new Date(item.Tanggal_Catat).toLocaleDateString('id-ID')
     }));
 
@@ -200,8 +229,9 @@ const PencatatanZakat: React.FC = () => {
                 <th>Id Muzaki</th>
                 <th>Nama</th>
                 <th>Jenis Kelamin</th>
-                <th>Nama Ayah</th>
+                <th>Jumlah Jiwa</th>
                 <th>Jumlah Beras</th>
+                <th>Nama Anggota Jiwa</th>
                 <th>Tanggal Catat</th>
                 <th>Aksi</th>
               </tr>
@@ -213,8 +243,9 @@ const PencatatanZakat: React.FC = () => {
                   <td>{d.Id_Muzaki}</td>
                   <td>{d.Nama}</td>
                   <td>{d.Jenis_Kelamin}</td>
-                  <td>{d.Nama_Ayah}</td>
+                  <td>{d.Jumlah_Jiwa} Jiwa</td>
                   <td>{d.Jumlah_Beras} Liter</td>
+                  <td>{d.Nama_Anggota_Jiwa}</td>
                   <td>{new Date(d.Tanggal_Catat).toLocaleDateString('id-ID')}</td>
                   <td className={styles.actionCell}>
                     <button onClick={() => openEdit(d)} className={styles.editButton}><FaEdit /></button>
@@ -253,14 +284,23 @@ const PencatatanZakat: React.FC = () => {
                   <option value="Perempuan">Perempuan</option>
                 </select>
               </div>
+
+              <div className={styles.formGroupRow}>
               <div className={styles.formGroup}>
-                <label>Nama Ayah</label>
-                <input name="Nama_Ayah" value={form.Nama_Ayah} onChange={handleChange} />
+                <label>Jumlah Jiwa</label>
+                <input 
+                  type="number" name="Jumlah_Jiwa" value={form.Jumlah_Jiwa} onChange={handleJiwaChange}min="0" step="1" required   />
               </div>
               <div className={styles.formGroup}>
                 <label>Jumlah Beras</label>
-                <input type="number" name="Jumlah_Beras" value={form.Jumlah_Beras} onChange={handleChange} min="0" step="0.5" required />
+                <input type="number" name="Jumlah_Beras" value={form.Jumlah_Beras} onChange={handleChange} min="0" step="0.5" required className={styles.readOnlyInput}/>
+              </div></div>
+
+              <div className={styles.formGroup}>
+                <label>Nama Anggota Jiwa</label>
+                <input name="Nama_Anggota_Jiwa" value={form.Nama_Anggota_Jiwa} onChange={handleChange} required />
               </div>
+
               <div className={styles.formGroup}>
                 <label>Tanggal Catat</label>
                 <input type="date" name="Tanggal_Catat" value={form.Tanggal_Catat} onChange={handleChange} required />

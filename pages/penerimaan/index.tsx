@@ -26,7 +26,7 @@ const PenerimaanZakat: React.FC = () => {
   const [data, setData] = useState<PenerimaanData[]>([]);
   const [form, setForm] = useState<PenerimaanData>({
     Id_Penerima: '',
-    Id_Mustahik: 'MK-MAH-001',
+    Id_Mustahik: 'MT-MAH-001',
     Nama: '',
     Alamat: '',
     Jenis_Kelamin: '',
@@ -58,16 +58,29 @@ const PenerimaanZakat: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: name === 'Jumlah_Beras' ? parseFloat(value) : value,
-    }));
+    
+    setForm(prev => {
+      // Jika yang diubah adalah Id_Penerima, update juga Id_Mustahik
+      if (name === "Id_Penerima") {
+        return {
+          ...prev,
+          Id_Penerima: value,
+          Id_Mustahik: `MT-MAH-${value}`, // Format otomatis
+        };
+      }
+      
+      // Untuk field lainnya, tetap seperti biasa
+      return {
+        ...prev,
+        [name]: name === 'Jumlah_Beras' ? parseFloat(value) : value,
+      };
+    });
   };
 
   const openCreate = () => {
     setForm({
       Id_Penerima: '',
-      Id_Mustahik: 'MK-MAH-001',
+      Id_Mustahik: 'MT-MAH-001',
       Nama: '',
       Alamat: '',
       Jenis_Kelamin: '',
@@ -279,31 +292,42 @@ const exportToExcel = () => {
                 <select name="Golongan" value={form.Golongan} onChange={handleChange} required>
                   <option value="">Pilih</option>
                   <option value="">Pilih</option>
-                  <option value="Fakir">Fakir</option>
-                  <option value="Miskin">Miskin</option>
-                  <option value="Hamba sahaya">Hamba Sahaya</option>
-                  <option value="Gharim">Gharim</option>
-                  <option value="Mualaf">Mualaf</option>
-                  <option value="Fii Sabilillah">Fii Sabilillah</option>
-                  <option value="Musafir">Musafir</option>
-                  <option value="Amil">Amil</option>
-                </select>
+                  <option value="Fakir">Warga Kurang Mampu</option>
+                  <option value="Miskin">Anak Yatim / Piatu</option>
+                  <option value="Hamba sahaya">Lansia / Janda / Dhuafa</option>
+                  <option value="Fii Sabilillah">Warga Sakit / Tidak Bisa Bekerja</option>
+                  <option value="Musafir">Pendatang / Musafir</option>
+                  <option value="Mualaf">Guru / Pengajar Tetap Musholla</option>                
+                  <option value="Gharim">Amil</option>
+                  </select>
               </div>
 
               <div className={styles.formGroup}>
                 <label>Usia</label>
-                <select name="Usia" value={form.Usia} onChange={handleChange} required>
-                  <option value="">Pilih</option>
-                  {[...Array(86)].map((_, i) => {
-                    const usia = i + 0; 
-                    return (
-                      <option key={usia} value={usia}>
-                        {usia}
-                      </option>
-                    );
-                  })}
-                </select>
+                <input 
+                  type="number" 
+                  name="Usia" 
+                  value={form.Usia} 
+                  onChange={handleChange} 
+                  min="0" 
+                  max="120" 
+                  required 
+                  placeholder="Pilih"
+                 
+                />
+                {form.Usia && (
+                  <small>
+                    Kategori: {
+                      form.Usia <= 12 ? "Anak-anak" :
+                      form.Usia <= 18 ? "Remaja" :
+                      form.Usia <= 25 ? "Pemuda" :
+                      form.Usia <= 60 ? "Dewasa" :
+                      "Lansia"
+                    }
+                  </small>
+                )}
               </div>
+
               </div>
 
               <div className={styles.formGroup}>

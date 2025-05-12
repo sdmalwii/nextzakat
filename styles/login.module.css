@@ -96,18 +96,7 @@
     transform: scale(0.98);
 }
 
-/* Forgot Password */
-.forgotPassword {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #007bff;
-    text-decoration: none;
-    margin-top: 1rem;
-}
 
-.forgotPassword:hover {
-    text-decoration: underline;
-}
 
 /* Animations */
 @keyframes fadeInUp {
